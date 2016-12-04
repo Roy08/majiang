@@ -335,12 +335,13 @@ void AI::set_quepai(int hand_brick[])
 
 double AI::calculate_energy(int hand_brick[])
 {
+	//  23445566689
 	double energy = 0, temp;
 	int  i;
-		for (i = 1; i <= 29; i++)
-		{
-			energy += 0.1*hand_brick[i]*m_daque[i];
-		}
+	for (i = 1; i <= 29; i++)
+	{
+		energy += 0.1*hand_brick[i] * m_daque[i];
+	}
 	for (i = 1; i <= 29; i++)
 	{
 		temp = hand_brick[i] * hand_brick[i - 1] * m_daque[i];
@@ -351,13 +352,22 @@ double AI::calculate_energy(int hand_brick[])
 		temp = hand_brick[i] * hand_brick[i - 2] * m_daque[i];
 		energy += temp;
 	}
-	tingpai(hand_brick);
-	int zhangshu=0;
 	for (i = 1; i <= 29; i++)
 	{
-		zhangshu += m_tingpai[i];
+		double k_energy = 0.5;
+		if (hand_brick[i] > 0)
+		{
+			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_daque[i];
+			if (i < 29)   energy += k_energy*m_anpai[i + 1] * m_daque[i];
+		}
 	}
-	energy += zhangshu * 20;
+	tingpai(hand_brick);
+	int zhangshu = 0;
+	for (i = 1; i <= 29; i++)
+	{
+		zhangshu += m_tingpai[i] * m_anpai[i];
+	}
+	energy += zhangshu * 10;
 	return energy;
 }
 
