@@ -15,8 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="majiang_lei3.cpp">
+    <ClCompile Include="AImain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="majiangAI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="majiangAI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

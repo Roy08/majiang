@@ -110,7 +110,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="majiang_lei3.cpp" />
+    <ClCompile Include="AImain.cpp" />
+    <ClCompile Include="majiangAI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="majiangAI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
