@@ -27,7 +27,7 @@ private:
 
 
 	int m_hand_brick[30];						//手牌数组，较少时，如13,10,7,4,1
-	int m_clear_brick[30];							//桌面碰杠牌
+	int m_clear_brick[30];							//自己的桌面碰杠牌
 	int m_tingpai[30];
 	int m_guopai = 0;
 	int m_jiang_num=0;
@@ -35,12 +35,13 @@ private:
 	int m_chupai_self;
 	int m_identity;
 	double m_daque[30];                              //打缺权重
+	int m_anpai[30];								//剩下的还从来没见过的牌
 		//后面的暂时还没用上
 	int m_desk_brick[30];							//桌面上已经出现了的牌
 	int m_xia_chupai[30];							//三个对手出的牌
 	int m_dui_chupai[30];
 	int m_shang_chupai[30];
-	int m_anpai[30];								//剩下的还从来没见过的牌
+
 };
 
 
@@ -51,8 +52,8 @@ string AI::respond_table(string message)
 	{
 		
 		int fapai = 0;
-		if (message[1] == 'T')  fapai += 10;
-		if (message[1] == 'W')  fapai += 20;
+		if (message[1] == 't')  fapai += 10;
+		if (message[1] == 'w')  fapai += 20;
 		fapai += message[2] - '0';
 		m_anpai[fapai] -= 1;
 		m_hand_brick[fapai]++;
@@ -62,12 +63,13 @@ string AI::respond_table(string message)
 			respond = "000g";
 			return respond;
 		}
-		int chupai_self = chupai(m_hand_brick);
+		m_chupai_self = chupai(m_hand_brick);
+		m_hand_brick[m_chupai_self] -= 1;
 		respond[0] = m_identity + '0';
-		if (chupai_self < 10) respond[1] = 'B';
-		if (chupai_self <20 && chupai_self > 10) respond[1] = 'T';
-		if (chupai_self <30 && chupai_self > 20) respond[1] = 'W';
-		respond[2] = chupai_self % 10 + '0';
+		if (m_chupai_self < 10) respond[1] = 'b';
+		if (m_chupai_self <20 && m_chupai_self > 10) respond[1] = 't';
+		if (m_chupai_self <30 && m_chupai_self > 20) respond[1] = 'w';
+		respond[2] = m_chupai_self % 10 + '0';
 		respond[3] = '1';
 		return respond;
 	}
@@ -75,8 +77,8 @@ string AI::respond_table(string message)
 	{
 		
 		int fapai = 0;
-		if (message[1] == 'T')  fapai += 10;
-		if (message[1] == 'W')  fapai += 20;
+		if (message[1] == 't')  fapai += 10;
+		if (message[1] == 'w')  fapai += 20;
 		fapai += message[2] - '0';
 		m_anpai[fapai] -= 1;
 		m_hand_brick[fapai]++;
@@ -102,9 +104,9 @@ string AI::respond_table(string message)
 			m_clear_brick[fapai] = 4;
 			m_hand_brick[fapai] = 0;
 			respond[0] = m_identity + '0';
-			if (fapai < 10) respond[1] = 'B';
-			if (fapai <20 && fapai > 10) respond[1] = 'T';
-			if (fapai <30 && fapai > 20) respond[1] = 'W';
+			if (fapai < 10) respond[1] = 'b';
+			if (fapai <20 && fapai > 10) respond[1] = 't';
+			if (fapai <30 && fapai > 20) respond[1] = 'w';
 			respond[2] = fapai % 10 + '0';
 			respond[3] = '3';
 			return respond;
@@ -113,9 +115,9 @@ string AI::respond_table(string message)
 		{
 			m_hand_brick[fapai] = 0;
 			respond[0] = m_identity + '0';
-			if (fapai < 10) respond[1] = 'B';
-			if (fapai <20 && fapai > 10) respond[1] = 'T';
-			if (fapai <30 && fapai > 20) respond[1] = 'W';
+			if (fapai < 10) respond[1] = 'b';
+			if (fapai <20 && fapai > 10) respond[1] = 't';
+			if (fapai <30 && fapai > 20) respond[1] = 'w';
 			respond[2] = fapai % 10 + '0';
 			respond[3] = '8';
 			return respond;
@@ -124,9 +126,9 @@ string AI::respond_table(string message)
 		m_chupai_self = chupai(m_hand_brick);
 		m_hand_brick[m_chupai_self] -= 1;
 		respond[0] = m_identity + '0';
-		if (m_chupai_self < 10) respond[1] = 'B';
-		if (m_chupai_self <20 && m_chupai_self > 10) respond[1] = 'T';
-		if (m_chupai_self <30 && m_chupai_self > 20) respond[1] = 'W';
+		if (m_chupai_self < 10) respond[1] = 'b';
+		if (m_chupai_self <20 && m_chupai_self > 10) respond[1] = 't';
+		if (m_chupai_self <30 && m_chupai_self > 20) respond[1] = 'w';
 		respond[2] = m_chupai_self % 10 + '0';
 		respond[3] = '1';
 		return respond;
@@ -134,8 +136,8 @@ string AI::respond_table(string message)
 	if (message[3] == '1')
 	{
 		m_chupai_other = 0;
-		if (message[1] == 'T')  m_chupai_other += 10;
-		if (message[1] == 'W')  m_chupai_other += 20;
+		if (message[1] == 't')  m_chupai_other += 10;
+		if (message[1] == 'w')  m_chupai_other += 20;
 		m_chupai_other += message[2] - '0';
 		m_anpai[m_chupai_other] -= 1;
 		if (hupai(m_hand_brick, m_chupai_other))
@@ -169,8 +171,8 @@ string AI::respond_table(string message)
 	if (message[3] == '2')
 	{
 		int huipai_other = 0;
-		if (message[1] == 'T')  huipai_other += 10;
-		if (message[1] == 'W')  huipai_other += 20;
+		if (message[1] == 't')  huipai_other += 10;
+		if (message[1] == 'w')  huipai_other += 20;
 		huipai_other += message[2] - '0';
 		
 		if ((huipai_other - m_chupai_other) == 0)
@@ -184,11 +186,14 @@ string AI::respond_table(string message)
 				respond[3] = '2';
 				return respond;
 			}
+			return "000g";
 		}
+
 		if ((huipai_other - m_chupai_self) == 0)
 		{
 			return "000g";
 		}
+
 		m_anpai[huipai_other] -= 1;
 		return "000g";
 
@@ -196,8 +201,8 @@ string AI::respond_table(string message)
 	if (message[3] == '3')
 	{
 		int gangpai = 0;
-		if (message[1] == 'T')  gangpai += 10;
-		if (message[1] == 'W')  gangpai += 20;
+		if (message[1] == 't')  gangpai += 10;
+		if (message[1] == 'w')  gangpai += 20;
 		gangpai += message[2] - '0';
 		m_anpai[gangpai] = 0;
 		return "000g";
@@ -206,8 +211,8 @@ string AI::respond_table(string message)
 	if (message[3] == '4')
 	{
 		int pengpai = 0;
-		if (message[1] == 'T')  pengpai += 10;
-		if (message[1] == 'W')  pengpai += 20;
+		if (message[1] == 't')  pengpai += 10;
+		if (message[1] == 'w')  pengpai += 20;
 		pengpai += message[2] - '0';
 		if (message[0] - '0' == m_identity)
 		{
@@ -216,9 +221,9 @@ string AI::respond_table(string message)
 			m_chupai_self = chupai(m_hand_brick);
 			m_hand_brick[m_chupai_self] -= 1;
 			respond[0] = m_identity + '0';
-			if (m_chupai_self < 10) respond[1] = 'B';
-			if (m_chupai_self <20 && m_chupai_self > 10) respond[1] = 'T';
-			if (m_chupai_self <30 && m_chupai_self > 20) respond[1] = 'W';
+			if (m_chupai_self < 10) respond[1] = 'b';
+			if (m_chupai_self <20 && m_chupai_self > 10) respond[1] = 't';
+			if (m_chupai_self <30 && m_chupai_self > 20) respond[1] = 'w';
 			respond[2] = m_chupai_self % 10 + '0';
 			respond[3] = '1';
 			return respond;
@@ -233,8 +238,8 @@ string AI::respond_table(string message)
 	if (message[3] == '5')
 	{
 		int gangpai = 0;
-		if (message[1] == 'T')  gangpai += 10;
-		if (message[1] == 'W')  gangpai += 20;
+		if (message[1] == 't')  gangpai += 10;
+		if (message[1] == 'w')  gangpai += 20;
 		gangpai += message[2] - '0';
 		if (message[0] - '0' == m_identity)
 		{
@@ -249,12 +254,12 @@ string AI::respond_table(string message)
 	if (message[3] == '6')
 	{
 		int gangpai = 0;
-		if (message[1] == 'T')  gangpai += 10;
-		if (message[1] == 'W')  gangpai += 20;
+		if (message[1] == 't')  gangpai += 10;
+		if (message[1] == 'w')  gangpai += 20;
 		gangpai += message[2] - '0';
 		if (message[0] - '0' == m_identity)
 		{
-			m_hand_brick[gangpai] =0;
+			m_hand_brick[gangpai] -=3;
 			m_clear_brick[gangpai] = 4;
 			return "000g";
 
@@ -270,8 +275,8 @@ string AI::respond_table(string message)
 	if (message[3] == '7'|| message[3] == '8' || message[3] == '9')
 	{
 		int pai_other = 0;
-		if (message[1] == 'T')  pai_other += 10;
-		if (message[1] == 'W')  pai_other += 20;
+		if (message[1] == 't')  pai_other += 10;
+		if (message[1] == 'w')  pai_other += 20;
 		pai_other += message[2] - '0';
 		if (hupai(m_hand_brick, pai_other))
 		{
@@ -575,65 +580,67 @@ int main()
 {
 	int a = 1;
 	AI player(a);
-	cout << player.respond_table("0B10")<<endl;
-	cout << player.respond_table("0B30") << endl;
-	cout << player.respond_table("0B40") << endl;
-	cout << player.respond_table("0T20") << endl;
-	cout << player.respond_table("0T50") << endl;
-	cout << player.respond_table("0T60") << endl;
-	cout << player.respond_table("0T60") << endl;
-	cout << player.respond_table("0T60") << endl;
-	cout << player.respond_table("0T90") << endl;
-	cout << player.respond_table("0T90") << endl;
-	cout << player.respond_table("0W20") << endl;
-	cout << player.respond_table("0W20") << endl;
-	cout << player.respond_table("0W5o") << endl;
-	cout << player.respond_table("0T20") << endl;
-	cout << player.respond_table("0W20") << endl;
-	cout << player.respond_table("0W50") << endl;
+	cout << player.respond_table("0b10")<<endl;
+	cout << player.respond_table("0b30") << endl;
+	cout << player.respond_table("0b40") << endl;
+	cout << player.respond_table("0t20") << endl;
+	cout << player.respond_table("0t50") << endl;
+	cout << player.respond_table("0t60") << endl;
+	cout << player.respond_table("0t60") << endl;
+	cout << player.respond_table("0t60") << endl;
+	cout << player.respond_table("0t90") << endl;
+	cout << player.respond_table("0t90") << endl;
+	cout << player.respond_table("0w20") << endl;
+	cout << player.respond_table("0w20") << endl;
+	cout << player.respond_table("0w5o") << endl;
+	cout << player.respond_table("0t20") << endl;
+	cout << player.respond_table("0w20") << endl;
+	cout << player.respond_table("0w50") << endl;
 
-	cout << player.respond_table("2T91") << endl;
-	cout << player.respond_table("1T94") << endl;
+	cout << player.respond_table("2t91") << endl;
+	cout << player.respond_table("1t94") << endl;
 
-	cout << player.respond_table("2T61") << endl;
-	cout << player.respond_table("1T66") << endl;
+	cout << player.respond_table("2t61") << endl;
+	cout << player.respond_table("1t66") << endl;
 
-	cout << player.respond_table("0T90") << endl;
-	cout << player.respond_table("1T95") << endl;
+	cout << player.respond_table("0t90") << endl;
+	cout << player.respond_table("1t95") << endl;
 
-	cout << player.respond_table("0W20") << endl;
-	cout << player.respond_table("0T20") << endl;
+	cout << player.respond_table("0w20") << endl;
+	cout << player.respond_table("0t30") << endl;
+	cout << player.respond_table("3t11") << endl;
+
 
 	system("pause");
 
 }
-//"0B10"
-//"0B20"
-//"0B30"
-//"0B40"
-//"0B50"
-//"0B60"
-//"0B70"
-//"0B80"
-//"0B90"
-//"0T10"
-//"0T20"
-//"0T30"
-//"0T40"
-//"0T50"
-//"0T60"
-//"0T70"
-//"0T80"
-//"0T90"
-//"0W10"
-//"0W20"
-//"0W30"
-//"0W40"
-//"0W50"
-//"0W60"
-//"0W70"
-//"0W80"
-//"0W90"
+//"0b10"
+//"0b20"
+//"0b30"
+//"0b40"
+//"0b50"
+//"0b60"
+//"0b70"
+//"0b80"
+//"0b90"
+//"0t10"
+//"0t20"
+//"0t30"
+//"0t40"
+//"0t50"
+//"0t60"
+//"0t70"
+//"0t80"
+//"0t90"
+//"0w10"
+//"0w20"
+//"0w30"
+//"0w40"
+//"0w50"
+//"0w60"
+//"0w70"
+//"0w80"
+//"0w90"
 //
 
 
