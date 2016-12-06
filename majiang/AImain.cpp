@@ -2,7 +2,7 @@
 #include"majiangAI.h"
 
 using namespace std;
-
+//2223469
 
 int main()
 {

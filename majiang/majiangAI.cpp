@@ -319,17 +319,28 @@ double AI::calculate_energy(int hand_brick[])
 	}
 	for (i = 1; i <= 29; i++)
 	{
-		temp = hand_brick[i] * hand_brick[i - 1] * m_daque[i];
-		energy += temp * 2;
+		if (hand_brick[i] * hand_brick[i - 1] > 0)
+		{
+			energy += 2 * m_daque[i];
+		}
 	}
 	for (i = 2; i <= 29; i++)
 	{
-		temp = hand_brick[i] * hand_brick[i - 2] * m_daque[i];
-		energy += temp;
+		if (hand_brick[i] * hand_brick[i - 2] > 0)
+		{
+			energy += m_daque[i];
+		}
 	}
 	for (i = 1; i <= 29; i++)
 	{
-		double k_energy = 0.5;
+		if (hand_brick[i]>1)
+		{
+			energy += hand_brick[i];
+		}
+	}
+	for (i = 1; i <= 29; i++)
+	{
+		double k_energy = 0.2;
 		if (hand_brick[i] > 0)
 		{
 			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_daque[i];
@@ -342,7 +353,7 @@ double AI::calculate_energy(int hand_brick[])
 	{
 		zhangshu += m_tingpai[i] * m_anpai[i];
 	}
-	energy += zhangshu * 10;
+	energy += zhangshu * 5;
 	return energy;
 }
 
@@ -491,7 +502,7 @@ bool AI::pengpai(int hand_brick[], int chupai)
 	double energy_peng = 0, energy_old = 0;
 	energy_old = calculate_energy(hand_brick_temp);
 	hand_brick_temp[chupai] -= 2;
-	energy_peng = calculate_energy_max(hand_brick_temp)+5;
+	energy_peng = calculate_energy_max(hand_brick_temp)+4;
 	if (energy_old > energy_peng)  return false;
 	else   return true;
 
@@ -505,7 +516,7 @@ bool AI::zhigangpai(int hand_brick[], int chupai)
 		double energy_gang = 0, energy_old = 0;
 		energy_old = calculate_energy(hand_brick_temp);
 		hand_brick_temp[chupai] -= 3;
-		energy_gang = calculate_energy(hand_brick_temp) + 9;
+		energy_gang = calculate_energy(hand_brick_temp) + 8;
 		if (energy_old > energy_gang)  return false;
 		else   return true;
 	}
@@ -521,7 +532,7 @@ bool AI::wangangpai(int hand_brick[], int mopai)
 		double energy_gang = 0, energy_no = 0;
 		energy_no = calculate_energy_max(hand_brick_temp);
 		hand_brick_temp[mopai] -= 1;
-		energy_gang = calculate_energy(hand_brick_temp) + 4;
+		energy_gang = calculate_energy(hand_brick_temp) + 3.5;
 		
 		
 		if (energy_no > energy_gang)  return false;
