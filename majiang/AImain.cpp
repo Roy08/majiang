@@ -2,42 +2,28 @@
 #include"majiangAI.h"
 
 using namespace std;
-//2223469
+//222333444556
 
 int main()
 {
 	int a = 1;
 	AI player(a);
-	cout << player.respond_table("0b10") << endl;
+	cout << player.respond_table("0b20") << endl;
+	cout << player.respond_table("0b20") << endl;
 	cout << player.respond_table("0b30") << endl;
 	cout << player.respond_table("0b40") << endl;
+	cout << player.respond_table("0b50") << endl;
+	cout << player.respond_table("0b50") << endl;
 	cout << player.respond_table("0t20") << endl;
-	cout << player.respond_table("0t50") << endl;
-	cout << player.respond_table("0t60") << endl;
-	cout << player.respond_table("0t60") << endl;
-	cout << player.respond_table("0t60") << endl;
-	cout << player.respond_table("0t90") << endl;
-	cout << player.respond_table("0t90") << endl;
-	cout << player.respond_table("0w20") << endl;
-	cout << player.respond_table("0w20") << endl;
-	cout << player.respond_table("0w5o") << endl;
 	cout << player.respond_table("0t20") << endl;
-	cout << player.respond_table("0w20") << endl;
-	cout << player.respond_table("0w50") << endl;
-
-	cout << player.respond_table("2t91") << endl;
-	cout << player.respond_table("1t94") << endl;
-
-	cout << player.respond_table("2t61") << endl;
-	cout << player.respond_table("1t66") << endl;
-
-	cout << player.respond_table("0t90") << endl;
-	cout << player.respond_table("1t95") << endl;
-
-	cout << player.respond_table("0w20") << endl;
+	cout << player.respond_table("0t20") << endl;
 	cout << player.respond_table("0t30") << endl;
-	cout << player.respond_table("3t91") << endl;
-	cout << player.respond_table("2t97") << endl;
+	cout << player.respond_table("0t40") << endl;
+	cout << player.respond_table("0t60") << endl;
+	cout << player.respond_table("0t70") << endl;
+	cout << player.respond_table("0t9o") << endl;
+	cout << player.respond_table("2t21") << endl;
+	cout << player.respond_table("1t24") << endl;
 
 
 	system("pause");

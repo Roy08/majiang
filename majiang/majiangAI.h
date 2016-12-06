@@ -22,6 +22,11 @@ private:
 	bool wangangpai(int hand_brick[], int mopai);  //判断自己是否要弯杠牌
 	int angangpai(int hand_brick[]);
 	double calculate_energy(int hand_brick[]);   //计算当前牌面的势能函数
+	double calculate_energy1(int hand_brick[]);
+	double calculate_energy2(int hand_brick[]);
+	double calculate_energy3(int hand_brick[]);
+	double calculate_energy4(int hand_brick[]);
+	double calculate_energy_for_residue(int hand_brick[]);
 	double calculate_energy_max(int hand_brick[]);  //计算当前牌面不论出哪张牌，能达到的最大势能
 	int remain(int hand_brick[]);				//计算当前牌组剔除后还有几张，是胡牌函数的小函数
 	int chupai(int hand_brick[]);				//判断该出哪张牌
