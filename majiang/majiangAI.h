@@ -31,6 +31,7 @@ private:
 	int remain(int hand_brick[]);				//计算当前牌组剔除后还有几张，是胡牌函数的小函数
 	int chupai(int hand_brick[]);				//判断该出哪张牌
 	void set_quepai(int hand_brick[]);
+	bool daque(int hand_brick[]);
 
 
 	int m_hand_brick[30];						//手牌数组，较少时，如13,10,7,4,1
@@ -41,7 +42,7 @@ private:
 	int m_chupai_other;
 	int m_chupai_self;
 	int m_identity;
-	double m_daque[30];                              //打缺权重
+	double m_dingque[30];                              //打缺权重
 	int m_anpai[30];								//剩下的还从来没见过的牌
 													//后面的暂时还没用上
 	int m_desk_brick[30];							//桌面上已经出现了的牌

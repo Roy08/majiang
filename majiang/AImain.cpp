@@ -19,11 +19,11 @@ int main()
 	cout << player.respond_table("0t20") << endl;
 	cout << player.respond_table("0t30") << endl;
 	cout << player.respond_table("0t40") << endl;
-	cout << player.respond_table("0t60") << endl;
+	cout << player.respond_table("0t50") << endl;
 	cout << player.respond_table("0t70") << endl;
 	cout << player.respond_table("0t9o") << endl;
 	cout << player.respond_table("2t21") << endl;
-	cout << player.respond_table("1t24") << endl;
+	cout << player.respond_table("1t26") << endl;
 
 
 	system("pause");

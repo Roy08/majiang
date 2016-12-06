@@ -211,11 +211,17 @@ string AI::respond_table(string message)
 		if (message[0] - '0' == m_identity)
 		{
 			m_clear_brick[gangpai] = 4;
-
+			m_anpai[gangpai] = 0;
+			respond = message;
+			return respond;
+		}
+		else
+		{
+			m_anpai[gangpai] =0;
+			return "000g";
 		}
 
-		m_anpai[gangpai] =0;
-		return "000g";
+		
 
 	}
 	if (message[3] == '6')
@@ -228,7 +234,8 @@ string AI::respond_table(string message)
 		{
 			m_hand_brick[gangpai] -=3;
 			m_clear_brick[gangpai] = 4;
-			return "000g";
+			respond = message;
+			return respond;
 
 		}
 		else
@@ -236,7 +243,6 @@ string AI::respond_table(string message)
 			m_anpai[gangpai] = 0;
 			return "000g";
 		}
-
 
 	}
 	if (message[3] == '7'|| message[3] == '8' || message[3] == '9')
@@ -270,7 +276,7 @@ AI::AI(int identity) {
 		m_hand_brick[i] = 0;
 		m_clear_brick[i] = 0;
 		m_tingpai[i] = 0;
-		m_daque[i] = 0;
+		m_dingque[i] = 0;
 		m_desk_brick[i] = 0;
 		m_xia_chupai[i] = 0;
 		m_dui_chupai[i] = 0;
@@ -295,11 +301,11 @@ void AI::set_quepai(int hand_brick[])
 	
 	for (i = 0; i < 30; i++)
 	{
-		m_daque[i] = 1;
+		m_dingque[i] = 1;
 	}
 	for (i = 0 + 10 * iden; i < 10 + 10 * iden; i++)
 	{
-		m_daque[i] = 0.01;
+		m_dingque[i] = 0.01;
 	}
 
 
@@ -334,24 +340,24 @@ double AI::calculate_energy(int hand_brick[])
 
 double AI::calculate_energy_for_residue(int hand_brick[])
 {
-	double energy = 0, temp;
+	double energy = 0;
 	int  i;
 	for (i = 1; i <= 29; i++)
 	{
-		energy += 0.1*hand_brick[i] * m_daque[i];
+		energy += 0.1*hand_brick[i] * m_dingque[i];
 	}
 	for (i = 1; i <= 29; i++)
 	{
 		if (hand_brick[i] * hand_brick[i - 1] > 0)
 		{
-			energy += 2 * m_daque[i];
+			energy += 2 * m_dingque[i];
 		}
 	}
 	for (i = 2; i <= 29; i++)
 	{
 		if (hand_brick[i] * hand_brick[i - 2] > 0)
 		{
-			energy += m_daque[i];
+			energy += m_dingque[i];
 		}
 	}
 	for (i = 1; i <= 29; i++)
@@ -366,8 +372,8 @@ double AI::calculate_energy_for_residue(int hand_brick[])
 		double k_energy = 0.2;
 		if (hand_brick[i] > 0)
 		{
-			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_daque[i];
-			if (i < 29)   energy += k_energy*m_anpai[i + 1] * m_daque[i];
+			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_dingque[i];
+			if (i < 29)   energy += k_energy*m_anpai[i + 1] * m_dingque[i];
 		}
 	}
 	return energy;
@@ -389,7 +395,7 @@ double AI::calculate_energy1(int hand_brick[])
 			hand_brick[i] = 0;
 			hand_brick[i+1] = 0;
 			hand_brick[i+2] = 0;
-			energy += 4*m_daque[i];
+			energy += 4*m_dingque[i];
 		}
 	}
 	for (i = 1; i <= 27; i++)
@@ -399,7 +405,7 @@ double AI::calculate_energy1(int hand_brick[])
 			hand_brick[i] -=1;
 			hand_brick[i + 1] -= 1;
 			hand_brick[i + 2] -=1;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	temp = calculate_energy_for_residue(hand_brick);
@@ -421,7 +427,7 @@ double AI::calculate_energy2(int hand_brick[])
 			hand_brick[i] = 0;
 			hand_brick[i + 1] = 0;
 			hand_brick[i + 2] = 0;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	for (i = 29; i >= 3; i--)
@@ -431,7 +437,7 @@ double AI::calculate_energy2(int hand_brick[])
 			hand_brick[i] -= 1;
 			hand_brick[i - 1] -= 1;
 			hand_brick[i - 2] -= 1;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	temp = calculate_energy_for_residue(hand_brick);
@@ -454,7 +460,7 @@ double AI::calculate_energy3(int hand_brick[])
 			hand_brick[i] = 0;
 			hand_brick[i - 1] = 0;
 			hand_brick[i - 2] = 0;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	for (i = 29; i >= 3; i--)
@@ -464,7 +470,7 @@ double AI::calculate_energy3(int hand_brick[])
 			hand_brick[i] -= 1;
 			hand_brick[i - 1] -= 1;
 			hand_brick[i - 2] -= 1;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	temp = calculate_energy_for_residue(hand_brick);
@@ -487,7 +493,7 @@ double AI::calculate_energy4(int hand_brick[])
 			hand_brick[i] = 0;
 			hand_brick[i - 1] = 0;
 			hand_brick[i - 2] = 0;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	for (i = 1; i <= 27; i++)
@@ -497,7 +503,7 @@ double AI::calculate_energy4(int hand_brick[])
 			hand_brick[i] -= 1;
 			hand_brick[i + 1] -= 1;
 			hand_brick[i + 2] -= 1;
-			energy += 4 * m_daque[i];
+			energy += 4 * m_dingque[i];
 		}
 	}
 	temp = calculate_energy_for_residue(hand_brick);
@@ -554,7 +560,7 @@ bool AI::hupai(int hand_brick[])
 	int hand_brick_temp[30];
 	int i;
 	memcpy(hand_brick_temp, hand_brick, 120);
-
+	if (!daque(hand_brick))   return  false;
 	if (remain(hand_brick_temp) == 0)
 	{
 		if (m_jiang_num == 1 || m_jiang_num == 7)
@@ -710,4 +716,16 @@ int AI::angangpai(int hand_brick[])
 	else   return true;
 }
 
-
+bool AI::daque(int hand_brick[])
+{
+	int num[3] = { 0,0,0 };
+	int i,j;
+	for (j = 0; j < 3; j++)
+	{
+		for (i = 0; i < 10; i++) {
+			num[j] += hand_brick[i+10*j];
+		}
+	}
+	if (num[0] * num[1] * num[2] == 0)  return true;
+	else  return  false;
+}
