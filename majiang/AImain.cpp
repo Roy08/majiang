@@ -1,7 +1,4 @@
-#include<iostream>
-#include<stdio.h>
-#include<string>
-#include<math.h>
+
 #include"majiangAI.h"
 
 using namespace std;
@@ -39,7 +36,8 @@ int main()
 
 	cout << player.respond_table("0w20") << endl;
 	cout << player.respond_table("0t30") << endl;
-	cout << player.respond_table("3t11") << endl;
+	cout << player.respond_table("3t91") << endl;
+	cout << player.respond_table("2t97") << endl;
 
 
 	system("pause");

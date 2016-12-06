@@ -105,6 +105,10 @@ string AI::respond_table(string message)
 		m_anpai[m_chupai_other] -= 1;
 		if (hupai(m_hand_brick, m_chupai_other))
 		{
+			if (m_anpai[m_chupai_other] >= 2)
+			{
+				return "000g";
+			}
 			m_jiang_num = 0;
 			respond[0] = m_identity + '0';
 			respond[1] = message[1];
@@ -273,6 +277,9 @@ AI::AI(int identity) {
 		m_shang_chupai[i] = 0;
 		m_anpai[i] = 4;
 	}
+	m_anpai[0] = 0;
+	m_anpai[10] = 0;
+	m_anpai[20] = 0;
 }
 
 void AI::set_quepai(int hand_brick[])
@@ -477,6 +484,10 @@ bool AI::pengpai(int hand_brick[], int chupai)
 {
 	int hand_brick_temp[30];
 	memcpy(hand_brick_temp, hand_brick, 120);
+	if (hand_brick_temp[chupai] < 2)
+	{
+		return false;
+	}
 	double energy_peng = 0, energy_old = 0;
 	energy_old = calculate_energy(hand_brick_temp);
 	hand_brick_temp[chupai] -= 2;
@@ -520,6 +531,7 @@ bool AI::wangangpai(int hand_brick[], int mopai)
 	
 }
 
+//00OO0O00OO0O0;
 int AI::angangpai(int hand_brick[]) 
 {
 	int i;
