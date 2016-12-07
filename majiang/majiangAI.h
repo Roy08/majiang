@@ -39,6 +39,7 @@ private:
 	int m_tingpai[30];
 	int m_guopai = 0;
 	int m_jiang_num = 0;
+	double m_basic_sco ;
 	int m_chupai_other;
 	int m_chupai_self;
 	int m_identity;
