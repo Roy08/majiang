@@ -271,7 +271,11 @@ AI::AI(int identity) {
 	m_identity = identity;
 	m_chupai_other = 0;
 	m_chupai_self = 0;
-	m_basic_sco = 4;
+	m_basic_sco = 7;
+	m_peng_sco = 11;
+	m_zhigang_sco = 8;
+	m_wangang_sco = 3.5;
+	m_angang_sco = 8;
 	for (i = 0; i <= 29; i++)
 	{
 		m_hand_brick[i] = 0;
@@ -336,8 +340,8 @@ double AI::calculate_energy(int hand_brick[])
 		double k_energy = 0.2;
 		if (hand_brick_temp[i] > 0)
 		{
-			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_dingque[i];
-			if (i < 29)   energy += k_energy*m_anpai[i + 1] * m_dingque[i];
+			energy += k_energy*(m_anpai[i - 1] + m_anpai[i])*m_dingque[i]*hand_brick_temp[i];
+			if (i < 29)   energy += k_energy*m_anpai[i + 1] * m_dingque[i] * hand_brick_temp[i];
 		}
 	}
 
@@ -670,7 +674,7 @@ bool AI::pengpai(int hand_brick[], int chupai)
 	double energy_peng = 0, energy_old = 0;
 	energy_old = calculate_energy(hand_brick_temp);
 	hand_brick_temp[chupai] -= 2;
-	energy_peng = calculate_energy_max(hand_brick_temp)+4;
+	energy_peng = calculate_energy_max(hand_brick_temp)+ m_peng_sco;
 	if (energy_old > energy_peng)  return false;
 	else   return true;
 
@@ -684,7 +688,7 @@ bool AI::zhigangpai(int hand_brick[], int chupai)
 		double energy_gang = 0, energy_old = 0;
 		energy_old = calculate_energy(hand_brick_temp);
 		hand_brick_temp[chupai] -= 3;
-		energy_gang = calculate_energy(hand_brick_temp) + 8;
+		energy_gang = calculate_energy(hand_brick_temp) + m_zhigang_sco;
 		if (energy_old > energy_gang)  return false;
 		else   return true;
 	}
@@ -700,7 +704,7 @@ bool AI::wangangpai(int hand_brick[], int mopai)
 		double energy_gang = 0, energy_no = 0;
 		energy_no = calculate_energy_max(hand_brick_temp);
 		hand_brick_temp[mopai] -= 1;
-		energy_gang = calculate_energy(hand_brick_temp) + 3.5;
+		energy_gang = calculate_energy(hand_brick_temp) + m_wangang_sco;
 		
 		
 		if (energy_no > energy_gang)  return false;
@@ -724,7 +728,7 @@ int AI::angangpai(int hand_brick[])
 	double energy_gang = 0, energy_no = 0;
 	energy_no = calculate_energy_max(hand_brick_temp);
 	hand_brick_temp[i] -= 4;
-	energy_gang = calculate_energy(hand_brick_temp)+8;
+	energy_gang = calculate_energy(hand_brick_temp)+ m_angang_sco;
 	if (energy_no > energy_gang)  return false;
 	else   return true;
 }

@@ -10,19 +10,19 @@ int main()
 	AI player(a);
 	cout << player.respond_table("0b30") << endl;
 	cout << player.respond_table("0b30") << endl;
-	cout << player.respond_table("0b80") << endl;
-	cout << player.respond_table("0b90") << endl;
-	cout << player.respond_table("0b90") << endl;
+	cout << player.respond_table("0b40") << endl;
+	cout << player.respond_table("0b10") << endl;
+	cout << player.respond_table("0b20") << endl;
 	cout << player.respond_table("0t10") << endl;
 	cout << player.respond_table("0t20") << endl;
-	cout << player.respond_table("0t30") << endl;
-	cout << player.respond_table("0t30") << endl;
+	cout << player.respond_table("0t40") << endl;
+	cout << player.respond_table("0t40") << endl;
 	cout << player.respond_table("0t50") << endl;
 	cout << player.respond_table("0t60") << endl;
 	cout << player.respond_table("0t70") << endl;
-	cout << player.respond_table("0t70") << endl;
-	cout << player.respond_table("0t9o") << endl;
-	
+	cout << player.respond_table("0t8o") << endl;
+	cout << player.respond_table("2b31") << endl;
+	//cout << player.respond_table("1b34") << endl;
 
 
 	system("pause");
