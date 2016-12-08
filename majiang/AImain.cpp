@@ -12,7 +12,7 @@ int main()
 	cout << player.respond_table("0b30") << endl;
 	cout << player.respond_table("0b40") << endl;
 	cout << player.respond_table("0b10") << endl;
-	cout << player.respond_table("0b20") << endl;
+	cout << player.respond_table("0t20") << endl;
 	cout << player.respond_table("0t10") << endl;
 	cout << player.respond_table("0t20") << endl;
 	cout << player.respond_table("0t40") << endl;
