@@ -271,11 +271,11 @@ AI::AI(int identity) {
 	m_identity = identity;
 	m_chupai_other = 0;
 	m_chupai_self = 0;
-	m_basic_sco = 7;
+	m_basic_sco = 9;
 	m_peng_sco = 11;
-	m_zhigang_sco = 15;
-	m_wangang_sco = 5;
-	m_angang_sco = 15;
+	m_zhigang_sco = 12;
+	m_wangang_sco = 4;
+	m_angang_sco = 12;
 	for (i = 0; i <= 29; i++)
 	{
 		m_hand_brick[i] = 0;
