@@ -4,24 +4,27 @@
 using namespace std;
 //222333444556
 
+
 int main()
 {
 	int a = 1;
 	AI player(a);
-	cout << player.respond_table("0b30") << endl;
-	cout << player.respond_table("0b30") << endl;
-	cout << player.respond_table("0b50") << endl;
+	cout << player.respond_table("0t10") << endl;
+	cout << player.respond_table("0t10") << endl;
+	cout << player.respond_table("0b40") << endl;
+	cout << player.respond_table("0b60") << endl;
 	cout << player.respond_table("0b60") << endl;
 	cout << player.respond_table("0b70") << endl;
-	cout << player.respond_table("0b70") << endl;
-	cout << player.respond_table("0t10") << endl;
-	cout << player.respond_table("0t10") << endl;
+	cout << player.respond_table("0b80") << endl;
+	cout << player.respond_table("0b80") << endl;
 	cout << player.respond_table("0t20") << endl;
 	cout << player.respond_table("0t40") << endl;
-	cout << player.respond_table("0t50") << endl;
+	cout << player.respond_table("0t80") << endl;
 	cout << player.respond_table("0t60") << endl;
 	cout << player.respond_table("0t7o") << endl;
-	cout << player.respond_table("0t40") << endl;
+	cout << player.respond_table("2t11") << endl;
+	
+
 	//cout << player.respond_table("1b24") << endl;
 	//cout << player.respond_table("0b20") << endl;
 

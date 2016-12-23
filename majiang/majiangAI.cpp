@@ -103,35 +103,40 @@ string AI::respond_table(string message)
 		if (message[1] == 'w')  m_chupai_other += 20;
 		m_chupai_other += message[2] - '0';
 		m_anpai[m_chupai_other] -= 1;
-		if (hupai(m_hand_brick, m_chupai_other))
+		if (m_dingque[m_chupai_other] > 0.5)
 		{
-			if (m_anpai[m_chupai_other] >= 2)
+			if (hupai(m_hand_brick, m_chupai_other))
 			{
-				return "000g";
+				m_jiang_num = 0;
+				if (m_anpai[m_chupai_other] >= 2)
+				{
+					return "000g";
+				}
+
+				respond[0] = m_identity + '0';
+				respond[1] = message[1];
+				respond[2] = message[2];
+				respond[3] = '2';
+				return respond;
 			}
-			m_jiang_num = 0;
-			respond[0] = m_identity + '0';
-			respond[1] = message[1];
-			respond[2] = message[2];
-			respond[3] = '2';
-			return respond;
+			if (zhigangpai(m_hand_brick, m_chupai_other))
+			{
+				respond[0] = m_identity + '0';
+				respond[1] = message[1];
+				respond[2] = message[2];
+				respond[3] = '9';
+				return respond;
+			}
+			if (pengpai(m_hand_brick, m_chupai_other))
+			{
+				respond[0] = m_identity + '0';
+				respond[1] = message[1];
+				respond[2] = message[2];
+				respond[3] = '7';
+				return respond;
+			}
 		}
-		if (zhigangpai(m_hand_brick, m_chupai_other))
-		{
-			respond[0] = m_identity + '0';
-			respond[1] = message[1];
-			respond[2] = message[2];
-			respond[3] = '9';
-			return respond;
-		}
-		if (pengpai(m_hand_brick, m_chupai_other))
-		{
-			respond[0] = m_identity + '0';
-			respond[1] = message[1];
-			respond[2] = message[2];
-			respond[3] = '7';
-			return respond;
-		}
+		
 		
 		return "000g";
 	}
@@ -161,7 +166,7 @@ string AI::respond_table(string message)
 			return "000g";
 		}
 
-		m_anpai[huipai_other] -= 1;
+		m_anpai[huipai_other] -= 1;                //表示自摸
 		return "000g";
 
 	}
@@ -234,6 +239,7 @@ string AI::respond_table(string message)
 		{
 			m_hand_brick[gangpai] -=3;
 			m_clear_brick[gangpai] = 4;
+			m_anpai[gangpai] = 0;
 			respond = message;
 			return respond;
 
